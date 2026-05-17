@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -72,7 +71,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (horizontalInput == 0)
             {
-                body.linearVelocity = new Vector2(-Mathf.Sign(-transform.localScale.x) * 10, 6);
+                float facing = Mathf.Sign(transform.localScale.x); 
+                body.linearVelocity = new Vector2(facing * 10, 6);
                 transform.localScale = new Vector3(-Mathf.Sign(-transform.localScale.x) *originalScale.x, transform.localScale.y, transform.localScale.z);
             }
             else
