@@ -766,7 +766,7 @@ GameObject:
   - component: {fileID: 311770781}
   - component: {fileID: 311770782}
   m_Layer: 5
-  m_Name: Health Bar
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1223,7 +1223,7 @@ Transform:
   m_GameObject: {fileID: 477552395}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071975, w: 0.70701617}
-  m_LocalPosition: {x: -0.72, y: 7.82, z: 0}
+  m_LocalPosition: {x: -10.83, y: 7.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2264,8 +2264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262f8ff451ffd4124a8cea635ea395cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  startingHealth: 0
-  healthBar: {fileID: 0}
+  startingHealth: 100
+  healthBar: {fileID: 311770782}
 --- !u!1 &663414541
 GameObject:
   m_ObjectHideFlags: 0
