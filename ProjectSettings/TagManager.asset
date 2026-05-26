@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -14,10 +15,10 @@ TagManager:
   - UI
   - Ground
   - Wall
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - PlayerProjectile
+  - EnemyProjectile
   - 
   - 
   - 
@@ -53,6 +54,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 40950955
+    locked: 0
+  - name: Enemy
+    uniqueID: 1431139827
     locked: 0
   m_RenderingLayers:
   - Default

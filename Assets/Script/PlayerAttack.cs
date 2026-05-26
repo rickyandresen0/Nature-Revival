@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float attackCooldown;
+    [SerializeField] private float attackDelay;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] starMagics;
     private Animator anim;
@@ -20,17 +22,25 @@ public class PlayerAttack : MonoBehaviour
         if(Input.GetMouseButton(0) && cooldownTimer > attackCooldown && playerMovement.canAttack())
             Attack();
 
-            cooldownTimer += Time.deltaTime;
+        cooldownTimer += Time.deltaTime;
     }
 
     private void Attack()
     {
         anim.SetTrigger("attack");
         cooldownTimer = 0;
-
-        starMagics[FindStarMagic()].transform.position = firePoint.position; 
-        starMagics[FindStarMagic()].GetComponent<Projectile>().setDirection(Mathf.Sign(transform.localScale.x)); 
+        StartCoroutine(ShootWithDelay());
     }
+
+    private IEnumerator ShootWithDelay()
+    {
+        yield return new WaitForSeconds(attackDelay);
+
+        int index = FindStarMagic();
+        starMagics[index].transform.position = firePoint.position; 
+        starMagics[index].GetComponent<Projectile>().setDirection(Mathf.Sign(transform.localScale.x)); 
+    }
+
 
     private int FindStarMagic()
     {

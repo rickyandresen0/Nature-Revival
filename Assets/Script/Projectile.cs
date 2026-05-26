@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+[SerializeField] private float damage; 
 [SerializeField] private float speed;
+[SerializeField] private string targetTag;
 private float direction;
 private bool hit;
 private float lifetime;
@@ -21,17 +23,22 @@ private void Update()
         if(hit) return;
         float movementSpeed = speed * Time.deltaTime * -direction;
         transform.Translate(movementSpeed, 0, 0);
+        Debug.Log("Projectile position: " + transform.position);
 
         lifetime += Time.deltaTime;
         if(lifetime > 5) gameObject.SetActive(false);
     }
 
 private void OnTriggerEnter2D(Collider2D collision)
-    {
-        hit = true;
-        boxCollider.enabled = false;
-        anim.SetTrigger("explode");
-    }
+{
+    if (collision.CompareTag(targetTag))
+        collision.GetComponent<Health>().TakeDamage(damage);
+
+    hit = true;
+    boxCollider.enabled = false;
+    anim.SetTrigger("explode");
+}
+
 
 public void setDirection(float _direction)
     {
