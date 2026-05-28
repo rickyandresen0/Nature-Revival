@@ -13,13 +13,15 @@ public class Health : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         currentHealth = startingHealth;
-        healthBar.SetMaxHealth((int)startingHealth);
+        if (healthBar != null)
+            healthBar.SetMaxHealth((int)startingHealth);
     }
 
     public void TakeDamage(float damage)
     {   
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, startingHealth);
-        healthBar.SetHealth((int)currentHealth);
+        if (healthBar != null)
+            healthBar.SetHealth((int)currentHealth);
 
         if (currentHealth > 0) 
         {
@@ -30,8 +32,9 @@ public class Health : MonoBehaviour
             if (!dead)
             {
                 anim.SetTrigger("die");
-                GetComponent<PlayerMovement>().enabled = false;
                 dead = true;
+                PlayerMovement pm = GetComponent<PlayerMovement>();
+                if (pm != null) pm.enabled = false;
                 Die();
 
             }
@@ -40,7 +43,6 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-
-        Debug.Log("Player died!");
+        Destroy(gameObject, 0.5f);
     }
 }

@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262f8ff451ffd4124a8cea635ea395cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  startingHealth: 5
+  startingHealth: 3
   healthBar: {fileID: 311770782}
 --- !u!1 &663414541
 GameObject:
@@ -4493,6 +4493,7 @@ GameObject:
   - component: {fileID: 2009056028}
   - component: {fileID: 2009056027}
   - component: {fileID: 2009056031}
+  - component: {fileID: 2009056032}
   m_Layer: 9
   m_Name: EnemyOne
   m_TagString: Enemy
@@ -4674,6 +4675,20 @@ MonoBehaviour:
   enemyProjectilePrefab: {fileID: 1959387128784621236, guid: 33bcaa522c25644a3af9c72fd58549d5, type: 3}
   range: 8
   shootDelay: 1
+--- !u!114 &2009056032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009056025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262f8ff451ffd4124a8cea635ea395cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  startingHealth: 3
+  healthBar: {fileID: 0}
 --- !u!1 &2053195753
 GameObject:
   m_ObjectHideFlags: 0
