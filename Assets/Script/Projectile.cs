@@ -36,9 +36,6 @@ public class Projectile : MonoBehaviour
     private void FixedUpdate()
     {
         if (hit) return;
-
-        // Gunakan Rigidbody2D.velocity bukan transform.Translate
-        // agar collision detection physics engine berjalan dengan benar
         body.linearVelocity = new Vector2(speed * -direction, 0);
     }
 

@@ -16,11 +16,22 @@ public class EnemyOneAttack : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogWarning($"[EnemyOneAttack] GameObject dengan tag 'Player' tidak ditemukan di Scene saat Awake!", this);
+        }
     }
 
     private void Update()
     {
+        if (player == null) return;
+
         cooldownTimer += Time.deltaTime;
 
         if (PlayerInRange() && cooldownTimer >= attackCooldown)
@@ -33,12 +44,15 @@ public class EnemyOneAttack : MonoBehaviour
     private IEnumerator ShootWithDelay()
     {
         yield return new WaitForSeconds(shootDelay);
-        Shoot();
+        if (player != null)
+        {
+            Shoot();
+        }
     }
 
     private void Shoot()
     {
-
+        if (player == null) return;
 
         anim.SetTrigger("enemyShoot");
         float direction = Mathf.Sign(player.position.x - transform.position.x);
@@ -48,8 +62,8 @@ public class EnemyOneAttack : MonoBehaviour
 
     private bool PlayerInRange()
     {
+        if (player == null) return false;
+
         return Vector2.Distance(transform.position, player.position) <= range;
     }
 }
-
-
