@@ -2,61 +2,83 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-[SerializeField] private float damage; 
-[SerializeField] private float speed;
-[SerializeField] private string targetTag;
-private float direction;
-private bool hit;
-private float lifetime;
+    [SerializeField] private float damage;
+    [SerializeField] private float speed;
+    [SerializeField] private string targetTag;
+    private float direction;
+    private bool hit;
+    private float lifetime;
 
-private BoxCollider2D boxCollider;
-private Animator anim;
+    private BoxCollider2D boxCollider;
+    private Animator anim;
+    private Rigidbody2D body;
 
-private void Awake()
+    private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
+        body = GetComponent<Rigidbody2D>();
     }
 
-private void Update()
+    private void OnEnable()
     {
-        if(hit) return;
-        float movementSpeed = speed * Time.deltaTime * -direction;
-        transform.Translate(movementSpeed, 0, 0);
-        Debug.Log("Projectile position: " + transform.position);
+        hit = false;
+    }
+
+    private void Update()
+    {
+        if (hit) return;
 
         lifetime += Time.deltaTime;
-        if(lifetime > 5) gameObject.SetActive(false);
+        if (lifetime > 5) gameObject.SetActive(false);
     }
 
-private void OnTriggerEnter2D(Collider2D collision)
-{
-    if (collision.CompareTag(targetTag))
-        collision.GetComponent<Health>().TakeDamage(damage);
-
-    hit = true;
-    boxCollider.enabled = false;
-    anim.SetTrigger("explode");
-}
-
-
-public void setDirection(float _direction)
+    private void FixedUpdate()
     {
-        lifetime = 0; 
+        if (hit) return;
+
+        // Gunakan Rigidbody2D.velocity bukan transform.Translate
+        // agar collision detection physics engine berjalan dengan benar
+        body.linearVelocity = new Vector2(speed * -direction, 0);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (hit) return; // cegah double trigger
+
+        if (collision.CompareTag(targetTag))
+        {
+            collision.GetComponent<Health>().TakeDamage(damage);
+            hit = true;
+            boxCollider.enabled = false;
+            body.linearVelocity = Vector2.zero;
+            anim.SetTrigger("explode");
+        }
+        else if (!collision.isTrigger)
+        {
+            hit = true;
+            boxCollider.enabled = false;
+            body.linearVelocity = Vector2.zero;
+            anim.SetTrigger("explode");
+        }
+    }
+
+    public void setDirection(float _direction)
+    {
+        lifetime = 0;
         direction = _direction;
         gameObject.SetActive(true);
         hit = false;
         boxCollider.enabled = true;
 
-        //set starmagic direction
+        // Flip sprite arah
         float localScaleX = transform.localScale.x;
         if (Mathf.Sign(localScaleX) != _direction)
             localScaleX = -localScaleX;
-
-        transform.localScale = new Vector3 (localScaleX, transform.localScale.y, transform.localScale.z);
+        transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);
     }
 
-private void Deactivate()
+    private void Deactivate()
     {
         gameObject.SetActive(false);
     }
