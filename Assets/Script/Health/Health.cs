@@ -43,6 +43,10 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
+        if (GetComponent<PlayerMovement>() == null)
+        {
+            GameManager.instance.EnemyKilled();
+        }  
         Destroy(gameObject, 0.8f);
     }
 }
