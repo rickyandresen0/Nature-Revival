@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: 128d374e6733844b8873af26a62389cd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5067494558722748300
+    second: urutan 2 clouds_0
+  - first:
+      213: -7017558298106427626
+    second: urutan 2 clouds_1
+  - first:
+      213: 1733031249029916977
+    second: urutan 2 clouds_2
+  - first:
+      213: 5939158237790750378
+    second: urutan 2 clouds_3
+  - first:
+      213: 6586147221481854306
+    second: urutan 2 clouds_4
+  - first:
+      213: -6475521229842975863
+    second: urutan 2 clouds_5
+  - first:
+      213: 2221989116333926978
+    second: urutan 2 clouds_6
+  - first:
+      213: 5130011913137616375
+    second: urutan 2 clouds_7
+  - first:
+      213: 7398661752807273598
+    second: urutan 2 clouds_8
+  - first:
+      213: 3402610410155155462
+    second: urutan 2 clouds_9
+  - first:
+      213: 2940423820211340707
+    second: urutan 2 clouds_10
+  - first:
+      213: -7593206854025315673
+    second: urutan 2 clouds_11
+  - first:
+      213: -794988162719917012
+    second: urutan 2 clouds_12
+  - first:
+      213: -992929065781719966
+    second: urutan 2 clouds_13
+  - first:
+      213: 3703818578473297491
+    second: urutan 2 clouds_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: urutan 2 clouds_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 778
+        width: 1920
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4701b1e2c84aca9b0800000000000000
+      internalID: -5067494558722748300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 599
+        width: 815
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61785c298ef9c9e90800000000000000
+      internalID: -7017558298106427626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_2
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 682
+        width: 851
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 139641f2db6fc0810800000000000000
+      internalID: 1733031249029916977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_3
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 625
+        width: 968
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa64a5443f02c6250800000000000000
+      internalID: 5939158237790750378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_4
+      rect:
+        serializedVersion: 2
+        x: 1353
+        y: 558
+        width: 567
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2651ad6c002b66b50800000000000000
+      internalID: 6586147221481854306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 477
+        width: 283
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98375bf00c35226a0800000000000000
+      internalID: -6475521229842975863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_6
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 552
+        width: 41
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24a2ed5245716de10800000000000000
+      internalID: 2221989116333926978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_7
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 520
+        width: 444
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f5f610b7a6713740800000000000000
+      internalID: 5130011913137616375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_8
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 561
+        width: 389
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e74b8551aa35da660800000000000000
+      internalID: 7398661752807273598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_9
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 532
+        width: 553
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6002856e320883f20800000000000000
+      internalID: 3402610410155155462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_10
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 544
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a54bcca2eb7ec820800000000000000
+      internalID: 2940423820211340707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_11
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 548
+        width: 26
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aa72c7c8928f9690800000000000000
+      internalID: -7593206854025315673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_12
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 405
+        width: 422
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2c50706a72a7f4f0800000000000000
+      internalID: -794988162719917012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_13
+      rect:
+        serializedVersion: 2
+        x: 1529
+        y: 463
+        width: 391
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26c8be286486832f0800000000000000
+      internalID: -992929065781719966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: urutan 2 clouds_14
+      rect:
+        serializedVersion: 2
+        x: 1452
+        y: 527
+        width: 39
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 356a46a9f5b966330800000000000000
+      internalID: 3703818578473297491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      urutan 2 clouds_0: -5067494558722748300
+      urutan 2 clouds_1: -7017558298106427626
+      urutan 2 clouds_10: 2940423820211340707
+      urutan 2 clouds_11: -7593206854025315673
+      urutan 2 clouds_12: -794988162719917012
+      urutan 2 clouds_13: -992929065781719966
+      urutan 2 clouds_14: 3703818578473297491
+      urutan 2 clouds_2: 1733031249029916977
+      urutan 2 clouds_3: 5939158237790750378
+      urutan 2 clouds_4: 6586147221481854306
+      urutan 2 clouds_5: -6475521229842975863
+      urutan 2 clouds_6: 2221989116333926978
+      urutan 2 clouds_7: 5130011913137616375
+      urutan 2 clouds_8: 7398661752807273598
+      urutan 2 clouds_9: 3402610410155155462
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

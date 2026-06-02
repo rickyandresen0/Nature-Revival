@@ -19,7 +19,7 @@ TagManager:
   - Enemy
   - PlayerProjectile
   - EnemyProjectile
-  - 
+  - Background
   - 
   - 
   - 
@@ -46,8 +46,8 @@ TagManager:
   - name: Background
     uniqueID: 2412763733
     locked: 0
-  - name: Foreground
-    uniqueID: 2964341595
+  - name: Enemy
+    uniqueID: 1431139827
     locked: 0
   - name: Player
     uniqueID: 2669139653
@@ -55,8 +55,8 @@ TagManager:
   - name: Ground
     uniqueID: 40950955
     locked: 0
-  - name: Enemy
-    uniqueID: 1431139827
+  - name: Foreground
+    uniqueID: 2964341595
     locked: 0
   m_RenderingLayers:
   - Default

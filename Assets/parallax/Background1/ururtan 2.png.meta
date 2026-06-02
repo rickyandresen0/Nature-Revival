@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: c5ea7cee019904b00b5fe62b21a1c5ba
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8206137314956974308
+    second: ururtan 2_0
+  - first:
+      213: -3479583504397190597
+    second: ururtan 2_1
+  - first:
+      213: -2425323248298126046
+    second: ururtan 2_2
+  - first:
+      213: -8217654517836884324
+    second: ururtan 2_3
+  - first:
+      213: -6147198576606914268
+    second: ururtan 2_4
+  - first:
+      213: 3788491429419713119
+    second: ururtan 2_5
+  - first:
+      213: 5981547384281851037
+    second: ururtan 2_6
+  - first:
+      213: 2058409651462845589
+    second: ururtan 2_7
+  - first:
+      213: -6312915269443294315
+    second: ururtan 2_8
+  - first:
+      213: 2589732356017327522
+    second: ururtan 2_9
+  - first:
+      213: -2571358164686518461
+    second: ururtan 2_10
+  - first:
+      213: -4848426224054584024
+    second: ururtan 2_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ururtan 2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 778
+        width: 1920
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e89614f86e02e170800000000000000
+      internalID: 8206137314956974308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 713
+        width: 870
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3ab8160d3906bfc0800000000000000
+      internalID: -3479583504397190597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_2
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 682
+        width: 830
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22591b70b55875ed0800000000000000
+      internalID: -2425323248298126046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_3
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 596
+        width: 691
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c96d27941c605fd80800000000000000
+      internalID: -8217654517836884324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_4
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 625
+        width: 968
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 429de8db673c0baa0800000000000000
+      internalID: -6147198576606914268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_5
+      rect:
+        serializedVersion: 2
+        x: 1353
+        y: 566
+        width: 563
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f528c2df1ec639430800000000000000
+      internalID: 3788491429419713119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_6
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 483
+        width: 278
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d94694787a9b20350800000000000000
+      internalID: 5981547384281851037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_7
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 520
+        width: 444
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 594bdad0ca0f09c10800000000000000
+      internalID: 2058409651462845589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_8
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 405
+        width: 389
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59b61bb72050468a0800000000000000
+      internalID: -6312915269443294315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_9
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 532
+        width: 553
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ad8fb75bd390f320800000000000000
+      internalID: 2589732356017327522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_10
+      rect:
+        serializedVersion: 2
+        x: 1452
+        y: 527
+        width: 39
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3474f837f53b05cd0800000000000000
+      internalID: -2571358164686518461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ururtan 2_11
+      rect:
+        serializedVersion: 2
+        x: 1529
+        y: 466
+        width: 386
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82db98b890ee6bcb0800000000000000
+      internalID: -4848426224054584024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ururtan 2_0: 8206137314956974308
+      ururtan 2_1: -3479583504397190597
+      ururtan 2_10: -2571358164686518461
+      ururtan 2_11: -4848426224054584024
+      ururtan 2_2: -2425323248298126046
+      ururtan 2_3: -8217654517836884324
+      ururtan 2_4: -6147198576606914268
+      ururtan 2_5: 3788491429419713119
+      ururtan 2_6: 5981547384281851037
+      ururtan 2_7: 2058409651462845589
+      ururtan 2_8: -6312915269443294315
+      ururtan 2_9: 2589732356017327522
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
