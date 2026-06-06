@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip shoot;
     public AudioClip run;
     public AudioClip takeDamage;
+    public AudioClip hitGround;
     public AudioClip enemyTakeDamage;
     public AudioClip enemyDie;
     public AudioClip enemyShoot;

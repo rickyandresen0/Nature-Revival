@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float speed;
     [SerializeField] private string targetTag;
+    [SerializeField] private bool destroyOnDeactivate; 
     private float direction;
     private bool hit;
     private float lifetime;
@@ -77,6 +78,9 @@ public class Projectile : MonoBehaviour
 
     private void Deactivate()
     {
-        gameObject.SetActive(false);
-    }
+        if (destroyOnDeactivate)
+            Destroy(gameObject);
+        else
+            gameObject.SetActive(false);
+}
 }

@@ -6,12 +6,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpPower;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
+    AudioManager audioManager;
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
     private float horizontalInput;
     private Vector3 originalScale;
+    private bool isRunning;
+
     private void Awake()
     {   
         //get reference for rigidbody and animator from game object
@@ -20,11 +23,13 @@ public class PlayerMovement : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
 
         originalScale = transform.localScale; // because the scale is 0.3
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }   
     
 
     private void Update()
     {
+        //Running
         horizontalInput = Input.GetAxis("Horizontal");
 
         //to flip player direction when walking
@@ -33,13 +38,22 @@ public class PlayerMovement : MonoBehaviour
         else if (horizontalInput > 0.01f)
             transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
 
-
-
         //to set animator parameters for animation
         anim.SetBool("run", horizontalInput !=0);
         anim.SetBool("grounded", isGrounded());
 
-
+        //Running SFX
+        if (horizontalInput != 0 && isGrounded())
+        {
+            if (!isRunning)
+            {
+                audioManager.PlaySFX(audioManager.run);
+                isRunning = true;
+            }
+        }
+        else 
+            isRunning = false;
+            
         //wall jump
         if(wallJumpCooldown > 0.2f)
         {
