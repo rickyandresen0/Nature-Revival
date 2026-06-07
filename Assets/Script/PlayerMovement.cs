@@ -123,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         {
             body.linearVelocity = new Vector2(body.linearVelocity.x, jumpPower);
             anim.SetTrigger("jump");
+            audioManager.PlaySFX(audioManager.jump); 
         }
         else if (onWall() && !isGrounded())
         {

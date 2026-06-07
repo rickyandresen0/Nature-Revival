@@ -15,9 +15,11 @@ public class EnemyOneAttack : MonoBehaviour
     private Transform player;
     private float cooldownTimer = Mathf.Infinity;
     private bool attackEnabled = false; 
+    AudioManager audioManager;
 
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         anim = GetComponent<Animator>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -61,6 +63,7 @@ public class EnemyOneAttack : MonoBehaviour
         float direction = Mathf.Sign(player.position.x - transform.position.x);
         GameObject projectile = Instantiate(enemyProjectilePrefab, firePoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().setDirection(-direction);
+        audioManager.PlaySFX(audioManager.enemyShoot);
     }
 
     private bool PlayerInRange()

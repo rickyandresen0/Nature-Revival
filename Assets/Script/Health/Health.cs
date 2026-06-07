@@ -8,9 +8,11 @@ public class Health : MonoBehaviour
     private float currentHealth;
     private Animator anim;
     private bool dead;
+    AudioManager audioManager;
 
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         anim = GetComponent<Animator>();
         currentHealth = startingHealth;
         if (healthBar != null)
@@ -26,6 +28,13 @@ public class Health : MonoBehaviour
         if (currentHealth > 0) 
         {
             anim.SetTrigger("hurt");
+
+            //player hurt sfx
+            if (GetComponent<PlayerMovement>() != null)
+                audioManager.PlaySFX(audioManager.takeDamage);
+            // enemy hurt sfx
+            else
+                audioManager.PlaySFX(audioManager.enemyTakeDamage);
         }
         else
         {
@@ -35,6 +44,9 @@ public class Health : MonoBehaviour
                 dead = true;
                 PlayerMovement pm = GetComponent<PlayerMovement>();
                 if (pm != null) pm.enabled = false;
+                // enemy die sfx
+                if (GetComponent<PlayerMovement>() == null)
+                audioManager.PlaySFX(audioManager.enemyDie);
                 Die();
 
             }

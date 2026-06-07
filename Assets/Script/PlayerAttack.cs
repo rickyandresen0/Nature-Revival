@@ -9,12 +9,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject[] starMagics;
     private Animator anim;
     private PlayerMovement playerMovement;
+    AudioManager audioManager;
     private float cooldownTimer = Mathf.Infinity;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     } 
 
     private void Update()
@@ -30,6 +32,7 @@ public class PlayerAttack : MonoBehaviour
         anim.SetTrigger("attack");
         cooldownTimer = 0;
         StartCoroutine(ShootWithDelay());
+        audioManager.PlaySFX(audioManager.shoot);
     }
 
     private IEnumerator ShootWithDelay()
