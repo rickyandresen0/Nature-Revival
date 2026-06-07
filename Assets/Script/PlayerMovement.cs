@@ -6,43 +6,65 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpPower;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
+
+    [Header("Wall Slide")]
+    [SerializeField] private float wallSlideGravity = 1.0f;   // gravity saat menempel wall (lebih kecil = slide lambat)
+    [SerializeField] private float wallSlideMaxSpeed = 2.5f;  // batas kecepatan jatuh saat slide
+    [SerializeField] private float wallStickDuration = 0.12f; // detik player "nempel" sebelum mulai slide
+
     AudioManager audioManager;
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D boxCollider;
+    private PhysicsMaterial2D noFriction;
+    private PhysicsMaterial2D fullFriction;
+
     private float wallJumpCooldown;
     private float horizontalInput;
     private Vector3 originalScale;
     private bool isRunning;
 
+    // Wall-stick timer: hitung berapa lama player sudah menempel
+    private float wallStickTimer;
+
     private void Awake()
-    {   
-        //get reference for rigidbody and animator from game object
+    {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
 
-        originalScale = transform.localScale; // because the scale is 0.3
+        originalScale = transform.localScale;
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-    }   
-    
+
+        // Buat PhysicsMaterial2D secara runtime agar tidak perlu file .physicsMaterial2D
+        // Ini menghilangkan friction sisi kiri/kanan BoxCollider supaya player tidak nyangkut di sudut tile
+        noFriction = new PhysicsMaterial2D("NoFriction");
+        noFriction.friction = 0f;
+        noFriction.bounciness = 0f;
+
+        fullFriction = new PhysicsMaterial2D("FullFriction");
+        fullFriction.friction = 0.4f;
+        fullFriction.bounciness = 0f;
+
+        // Default: pakai noFriction agar tidak nyangkut
+        boxCollider.sharedMaterial = noFriction;
+    }
 
     private void Update()
     {
-        //Running
         horizontalInput = Input.GetAxis("Horizontal");
 
-        //to flip player direction when walking
+        // Flip player direction
         if (horizontalInput < -0.01f)
             transform.localScale = originalScale;
         else if (horizontalInput > 0.01f)
             transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
 
-        //to set animator parameters for animation
-        anim.SetBool("run", horizontalInput !=0);
+        // Animator parameters
+        anim.SetBool("run", horizontalInput != 0);
         anim.SetBool("grounded", isGrounded());
 
-        //Running SFX
+        // Running SFX
         if (horizontalInput != 0 && isGrounded())
         {
             if (!isRunning)
@@ -51,62 +73,108 @@ public class PlayerMovement : MonoBehaviour
                 isRunning = true;
             }
         }
-        else 
+        else
             isRunning = false;
-            
-        //wall jump
-        if(wallJumpCooldown > 0.2f)
+
+        // Movement & wall logic
+        if (wallJumpCooldown > 0.2f)
         {
-        body.linearVelocity = new Vector2( horizontalInput * speed, body.linearVelocity.y);
+            body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
 
-        if (onWall() && !isGrounded())
+            if (onWall() && !isGrounded())
             {
-                body.gravityScale = 0;
-                body.linearVelocity = Vector2.zero;
+                HandleWallSlide();
             }
-        else 
-            body.gravityScale = 2.5f;
+            else
+            {
+                // Di udara bebas atau di tanah: reset timer & gravity normal
+                wallStickTimer = 0f;
+                body.gravityScale = 2.5f;
 
-        if(Input.GetKeyDown(KeyCode.Space))
-            Jump(); 
+                // Kembalikan full friction hanya saat di tanah agar tidak slip
+                boxCollider.sharedMaterial = isGrounded() ? fullFriction : noFriction;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+                Jump();
         }
-        else 
+        else
+        {
             wallJumpCooldown += Time.deltaTime;
-    }   
+        }
+    }
+
+    /// <summary>
+    /// Mengatur perilaku wall-slide:
+    /// - Fase stick  (0 .. wallStickDuration): gravity = 0, velocity = 0 → terasa "nempel sebentar"
+    /// - Fase slide  (setelah wallStickDuration): gravity turun perlahan, kecepatan jatuh dibatasi
+    /// </summary>
+    private void HandleWallSlide()
+    {
+        boxCollider.sharedMaterial = noFriction; // pastikan tidak ada friction samping
+
+        wallStickTimer += Time.deltaTime;
+
+        if (wallStickTimer < wallStickDuration)
+        {
+            // Fase stick: freeze sebentar
+            body.gravityScale = 0f;
+            body.linearVelocity = Vector2.zero;
+        }
+        else
+        {
+            // Fase slide: gravity ringan, clamp kecepatan jatuh
+            body.gravityScale = wallSlideGravity;
+            float clampedY = Mathf.Max(body.linearVelocity.y, -wallSlideMaxSpeed);
+            body.linearVelocity = new Vector2(0f, clampedY);
+        }
+    }
 
     private void Jump()
     {
         if (isGrounded())
         {
-        body.linearVelocity = new Vector2(body.linearVelocity.x, jumpPower); 
-        anim.SetTrigger("jump");
+            body.linearVelocity = new Vector2(body.linearVelocity.x, jumpPower);
+            anim.SetTrigger("jump");
         }
         else if (onWall() && !isGrounded())
         {
+            // Reset stick timer agar jump tidak terasa delay
+            wallStickTimer = 0f;
+
             if (horizontalInput == 0)
             {
-                float facing = Mathf.Sign(transform.localScale.x); 
+                float facing = Mathf.Sign(transform.localScale.x);
                 body.linearVelocity = new Vector2(facing * 10, 6);
-                transform.localScale = new Vector3(-Mathf.Sign(-transform.localScale.x) *originalScale.x, transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(
+                    -Mathf.Sign(-transform.localScale.x) * originalScale.x,
+                    transform.localScale.y,
+                    transform.localScale.z);
             }
             else
+            {
                 body.linearVelocity = new Vector2(-Mathf.Sign(-transform.localScale.x) * 3, 6);
+            }
+
             wallJumpCooldown = 0;
         }
     }
+
     private bool isGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(
+            boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
         return raycastHit.collider != null;
     }
-        private bool onWall()
+
+    private bool onWall()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(
-            boxCollider.bounds.center, 
-            boxCollider.bounds.size, 
-            0, 
-            new Vector2(-transform.localScale.x, 0), 
-            0.1f, 
+            boxCollider.bounds.center,
+            boxCollider.bounds.size,
+            0,
+            new Vector2(-transform.localScale.x, 0),
+            0.1f,
             wallLayer);
         return raycastHit.collider != null;
     }
