@@ -8,9 +8,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
 
     [Header("Wall Slide")]
-    [SerializeField] private float wallSlideGravity = 1.0f;   // gravity saat menempel wall (lebih kecil = slide lambat)
-    [SerializeField] private float wallSlideMaxSpeed = 2.5f;  // batas kecepatan jatuh saat slide
-    [SerializeField] private float wallStickDuration = 0.12f; // detik player "nempel" sebelum mulai slide
+    [SerializeField] private float wallSlideGravity = 1.0f;
+    [SerializeField] private float wallSlideMaxSpeed = 2.5f;
+    [SerializeField] private float wallStickDuration = 0.12f;
 
     AudioManager audioManager;
     private Rigidbody2D body;
