@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 originalScale;
     private bool isRunning;
 
-    // Wall-stick timer: hitung berapa lama player sudah menempel
     private float wallStickTimer;
 
     private void Awake()
@@ -36,8 +35,6 @@ public class PlayerMovement : MonoBehaviour
         originalScale = transform.localScale;
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
-        // Buat PhysicsMaterial2D secara runtime agar tidak perlu file .physicsMaterial2D
-        // Ini menghilangkan friction sisi kiri/kanan BoxCollider supaya player tidak nyangkut di sudut tile
         noFriction = new PhysicsMaterial2D("NoFriction");
         noFriction.friction = 0f;
         noFriction.bounciness = 0f;
@@ -46,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
         fullFriction.friction = 0.4f;
         fullFriction.bounciness = 0f;
 
-        // Default: pakai noFriction agar tidak nyangkut
         boxCollider.sharedMaterial = noFriction;
     }
 
@@ -87,7 +83,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                // Di udara bebas atau di tanah: reset timer & gravity normal
                 wallStickTimer = 0f;
                 body.gravityScale = 2.5f;
 
@@ -104,11 +99,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Mengatur perilaku wall-slide:
-    /// - Fase stick  (0 .. wallStickDuration): gravity = 0, velocity = 0 → terasa "nempel sebentar"
-    /// - Fase slide  (setelah wallStickDuration): gravity turun perlahan, kecepatan jatuh dibatasi
-    /// </summary>
     private void HandleWallSlide()
     {
         boxCollider.sharedMaterial = noFriction; // pastikan tidak ada friction samping
@@ -117,13 +107,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (wallStickTimer < wallStickDuration)
         {
-            // Fase stick: freeze sebentar
             body.gravityScale = 0f;
             body.linearVelocity = Vector2.zero;
         }
         else
         {
-            // Fase slide: gravity ringan, clamp kecepatan jatuh
             body.gravityScale = wallSlideGravity;
             float clampedY = Mathf.Max(body.linearVelocity.y, -wallSlideMaxSpeed);
             body.linearVelocity = new Vector2(0f, clampedY);
@@ -139,7 +127,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (onWall() && !isGrounded())
         {
-            // Reset stick timer agar jump tidak terasa delay
             wallStickTimer = 0f;
 
             if (horizontalInput == 0)
