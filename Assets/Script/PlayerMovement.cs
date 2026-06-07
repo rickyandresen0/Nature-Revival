@@ -86,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
                 wallStickTimer = 0f;
                 body.gravityScale = 2.5f;
 
-                // Kembalikan full friction hanya saat di tanah agar tidak slip
                 boxCollider.sharedMaterial = isGrounded() ? fullFriction : noFriction;
             }
 
@@ -101,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleWallSlide()
     {
-        boxCollider.sharedMaterial = noFriction; // pastikan tidak ada friction samping
+        boxCollider.sharedMaterial = noFriction;
 
         wallStickTimer += Time.deltaTime;
 
