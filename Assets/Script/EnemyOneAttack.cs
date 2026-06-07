@@ -3,51 +3,53 @@ using System.Collections;
 
 public class EnemyOneAttack : MonoBehaviour
 {
-    [SerializeField] private float attackCooldown;
+    [SerializeField] private float attackCooldown = 2f;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject enemyProjectilePrefab;
-    [SerializeField] private float range;
-    [SerializeField] private float shootDelay;
+    [SerializeField] private float range = 5f;
+    [SerializeField] private float shootDelay = 0.3f;
+
+    public float Range => range;
+
     private Animator anim;
     private Transform player;
     private float cooldownTimer = Mathf.Infinity;
-
+    private bool attackEnabled = false; 
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
-        {
             player = playerObj.transform;
-        }
         else
-        {
-            Debug.LogWarning($"[EnemyOneAttack] GameObject dengan tag 'Player' tidak ditemukan di Scene saat Awake!", this);
-        }
+            Debug.LogWarning("[EnemyOneAttack] Tag 'Player' tidak ditemukan!", this);
     }
 
     private void Update()
     {
-        if (player == null) return;
+        if (player == null || !attackEnabled) return;
 
         cooldownTimer += Time.deltaTime;
 
         if (PlayerInRange() && cooldownTimer >= attackCooldown)
         {
-            cooldownTimer = 0;
+            cooldownTimer = 0f;
             StartCoroutine(ShootWithDelay());
         }
+    }
+
+    public void SetAttackEnabled(bool enabled)
+    {
+        attackEnabled = enabled;
     }
 
     private IEnumerator ShootWithDelay()
     {
         yield return new WaitForSeconds(shootDelay);
-        if (player != null)
-        {
+        if (player != null && attackEnabled)
             Shoot();
-        }
     }
 
     private void Shoot()
@@ -55,6 +57,7 @@ public class EnemyOneAttack : MonoBehaviour
         if (player == null) return;
 
         anim.SetTrigger("enemyShoot");
+
         float direction = Mathf.Sign(player.position.x - transform.position.x);
         GameObject projectile = Instantiate(enemyProjectilePrefab, firePoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().setDirection(-direction);
@@ -63,7 +66,6 @@ public class EnemyOneAttack : MonoBehaviour
     private bool PlayerInRange()
     {
         if (player == null) return false;
-
         return Vector2.Distance(transform.position, player.position) <= range;
     }
 }

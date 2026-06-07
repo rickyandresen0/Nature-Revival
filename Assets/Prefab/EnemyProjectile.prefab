@@ -93,7 +93,7 @@ SpriteRenderer:
   m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!61 &6177757494280265600
 BoxCollider2D:
@@ -205,3 +205,5 @@ MonoBehaviour:
   damage: 1
   speed: 10
   targetTag: Player
+  destroyOnHit: 1
+  explodeDuration: 0.25
