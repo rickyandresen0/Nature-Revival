@@ -616,9 +616,7 @@ MonoBehaviour:
   gameHolder: {fileID: 857894185}
   piecePrefab: {fileID: 736623498306374999, guid: 92607c382f3429849835cbf92eb274bc, type: 3}
   imageTextures:
-  - {fileID: 2800000, guid: 9f078d8003eac434db2dd92ae9750461, type: 3}
-  - {fileID: 2800000, guid: 3c2c05956758c9842a1a96757d279051, type: 3}
-  - {fileID: 2800000, guid: 947f3d2322ba54a4abf1523d1e5921a4, type: 3}
+  - {fileID: 2800000, guid: 9a657f43279c07f49b3e444e319c47df, type: 3}
   - {fileID: 2800000, guid: 2744ac65e1504bb458a1b3b50f000443, type: 3}
   levelSelectPanel: {fileID: 1234050433}
   levelSelectPrefab: {fileID: 1098101654109124582, guid: 13f034cdffd99d6439d4b864257bf6c9, type: 3}
@@ -633,8 +631,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 368.35754, y: 156.4447, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.14, y: 2.14, z: 2.14}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
