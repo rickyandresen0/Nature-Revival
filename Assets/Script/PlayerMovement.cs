@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     AudioManager audioManager;
     private Rigidbody2D body;
     private Animator anim;
-    private BoxCollider2D boxCollider;
+    private CapsuleCollider2D capsuleCollider;
     private PhysicsMaterial2D noFriction;
     private PhysicsMaterial2D fullFriction;
 
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
 
         originalScale = transform.localScale;
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         fullFriction.friction = 0.4f;
         fullFriction.bounciness = 0f;
 
-        boxCollider.sharedMaterial = noFriction;
+        capsuleCollider.sharedMaterial = noFriction;
     }
 
     private void Update()
@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
                 wallStickTimer = 0f;
                 body.gravityScale = 2.5f;
 
-                boxCollider.sharedMaterial = isGrounded() ? fullFriction : noFriction;
+                capsuleCollider.sharedMaterial = isGrounded() ? fullFriction : noFriction;
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleWallSlide()
     {
-        boxCollider.sharedMaterial = noFriction;
+        capsuleCollider.sharedMaterial = noFriction;
 
         wallStickTimer += Time.deltaTime;
 
@@ -150,15 +150,15 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(
-            boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+            capsuleCollider.bounds.center, capsuleCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
         return raycastHit.collider != null;
     }
 
     private bool onWall()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(
-            boxCollider.bounds.center,
-            boxCollider.bounds.size,
+            capsuleCollider.bounds.center,
+            capsuleCollider.bounds.size,
             0,
             new Vector2(-transform.localScale.x, 0),
             0.1f,
