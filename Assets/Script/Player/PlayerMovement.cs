@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Player Movement")]
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private LayerMask groundLayer;
@@ -10,7 +11,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Wall Slide")]
     [SerializeField] private float wallSlideGravity = 1.0f;
     [SerializeField] private float wallSlideMaxSpeed = 2.5f;
-    [SerializeField] private float wallStickDuration = 0.12f;
+
+    [Header("Wall Jump Tuning")]
+    [SerializeField] private float wallJumpUpForce = 8f;
+    [SerializeField] private float wallJumpPushForce = 10f;
 
     AudioManager audioManager;
     private Rigidbody2D body;
@@ -23,8 +27,6 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
     private Vector3 originalScale;
     private bool isRunning;
-
-    private float wallStickTimer;
 
     private void Awake()
     {
@@ -50,11 +52,19 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
 
+        if (wallJumpCooldown <= 0.2f)
+        {
+            wallJumpCooldown += Time.deltaTime;
+        }
+
         // Flip player direction
-        if (horizontalInput < -0.01f)
-            transform.localScale = originalScale;
-        else if (horizontalInput > 0.01f)
-            transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+        if (wallJumpCooldown > 0.2f)
+            {
+                if (horizontalInput < -0.01f)
+                    transform.localScale = originalScale;
+                else if (horizontalInput > 0.01f)
+                    transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+            }
 
         // Animator parameters
         anim.SetBool("run", horizontalInput != 0);
@@ -73,48 +83,33 @@ public class PlayerMovement : MonoBehaviour
             isRunning = false;
 
         // Movement & wall logic
-        if (wallJumpCooldown > 0.2f)
+        if (onWall() && !isGrounded() && wallJumpCooldown > 0.2f)
         {
-
-            if (onWall() && !isGrounded())
-            {
-                HandleWallSlide();
-            }
-            else
-            {
-                body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
-                wallStickTimer = 0f;
-                body.gravityScale = 2.5f;
-
-                capsuleCollider.sharedMaterial = isGrounded() ? fullFriction : noFriction;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-                Jump();
+            HandleWallSlide();
         }
         else
         {
-            wallJumpCooldown += Time.deltaTime;
+            body.gravityScale = 2.5f;
+            capsuleCollider.sharedMaterial = (isGrounded() && !onWall()) ? fullFriction : noFriction;
+
+            if (wallJumpCooldown > 0.2f)
+            {
+                body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
+            }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Jump();
     }
 
     private void HandleWallSlide()
     {
         capsuleCollider.sharedMaterial = noFriction;
-
-        wallStickTimer += Time.deltaTime;
-
-        if (wallStickTimer < wallStickDuration)
-        {
-            body.gravityScale = 0f;
-            body.linearVelocity = Vector2.zero;
-        }
-        else
-        {
-            body.gravityScale = wallSlideGravity;
-            float clampedY = Mathf.Max(body.linearVelocity.y, -wallSlideMaxSpeed);
-            body.linearVelocity = new Vector2(0f, clampedY);
-        }
+        
+        body.gravityScale = wallSlideGravity;
+        float clampedY = Mathf.Max(body.linearVelocity.y, -wallSlideMaxSpeed);
+        body.linearVelocity = new Vector2(0f, clampedY);
+        
     }
 
     private void Jump()
@@ -127,23 +122,17 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (onWall() && !isGrounded())
         {
-            wallStickTimer = 0f;
+            float wallDir = -Mathf.Sign(transform.localScale.x);
+            float jumpDirX = -wallDir; 
+            body.linearVelocity = new Vector2(jumpDirX * wallJumpPushForce, wallJumpUpForce);
 
-            if (horizontalInput == 0)
-            {
-                float facing = Mathf.Sign(transform.localScale.x);
-                body.linearVelocity = new Vector2(facing * 10, 6);
-                transform.localScale = new Vector3(
-                    -Mathf.Sign(-transform.localScale.x) * originalScale.x,
-                    transform.localScale.y,
-                    transform.localScale.z);
-            }
-            else
-            {
-                body.linearVelocity = new Vector2(-Mathf.Sign(-transform.localScale.x) * 3, 6);
-            }
+        if (jumpDirX < 0)
+            transform.localScale = originalScale;
 
-            wallJumpCooldown = 0;
+        else
+            transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+
+        wallJumpCooldown = 0f;
         }
     }
 
@@ -156,12 +145,13 @@ public class PlayerMovement : MonoBehaviour
 
     private bool onWall()
     {
+        Vector2 boxSize = new Vector2(capsuleCollider.bounds.size.x, capsuleCollider.bounds.size.y * 0.9f);
         RaycastHit2D raycastHit = Physics2D.BoxCast(
             capsuleCollider.bounds.center,
-            capsuleCollider.bounds.size,
+            boxSize,
             0,
             new Vector2(-transform.localScale.x, 0),
-            0.1f,
+            0.15f,
             wallLayer);
         return raycastHit.collider != null;
     }

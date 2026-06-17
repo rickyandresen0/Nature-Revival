@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int totalEnemies;
     [SerializeField] private Slider progressBar;
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject losePanel;
     private int enemiesKilled;
 
     private void Awake()
@@ -25,6 +27,17 @@ public class GameManager : MonoBehaviour
 
     private void Win()
     {
-        Debug.Log("You Win!");
+        winPanel.SetActive(true);
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void Lose()
+    {
+        losePanel.SetActive(true);
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

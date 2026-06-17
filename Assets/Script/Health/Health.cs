@@ -55,10 +55,16 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        if (GetComponent<PlayerMovement>() == null)
+        if (GetComponent<PlayerMovement>() != null)
         {
-            GameManager.instance.EnemyKilled();
+            // player mati
+            GameManager.instance.Lose();
         }  
-        Destroy(gameObject, 0.8f);
+        else
+        {
+            //enemy meninggal
+            GameManager.instance.EnemyKilled();
+            Destroy(gameObject, 0.8f);
+        }
     }
 }
