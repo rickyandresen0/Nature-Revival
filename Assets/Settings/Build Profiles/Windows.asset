@@ -379,6 +379,9 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/Level01.unity
     m_guid: 8c9cfa26abfee488c85f1582747f6a02
+  - m_enabled: 1
+    m_path: Assets/Scenes/Puzzle2.unity
+    m_guid: 972f8bf96ecea4189967824ac4a410ff
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
