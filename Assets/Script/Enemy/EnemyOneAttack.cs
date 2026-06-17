@@ -62,8 +62,8 @@ public class EnemyOneAttack : MonoBehaviour
 
         float direction = Mathf.Sign(player.position.x - transform.position.x);
         GameObject projectile = Instantiate(enemyProjectilePrefab, firePoint.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().setDirection(-direction);
         projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); 
+        projectile.GetComponent<Projectile>().setDirection(-direction);
         audioManager.PlaySFX(audioManager.enemyShoot);
     }
 

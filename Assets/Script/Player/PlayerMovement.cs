@@ -75,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
         // Movement & wall logic
         if (wallJumpCooldown > 0.2f)
         {
-            body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
 
             if (onWall() && !isGrounded())
             {
@@ -83,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
                 wallStickTimer = 0f;
                 body.gravityScale = 2.5f;
 
