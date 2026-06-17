@@ -5,13 +5,22 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject confirmationPanel;
+    [SerializeField] private string mainGameplaySceneName = "Level01";
     private bool isRestarting;
     private bool isPaused;
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (SceneManager.GetSceneByName("Puzzle2").isLoaded)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     private void Update()
@@ -40,11 +49,21 @@ public class PauseMenu : MonoBehaviour
     {
         pausePanel.SetActive(false);
         confirmationPanel.SetActive(false); 
-        Time.timeScale = 1;
         isPaused = false;
-        //sama jg buat kursor
-        Cursor.lockState = CursorLockMode.Locked; // lock cursor
-        Cursor.visible = false;
+        bool isPuzzleActive = SceneManager.GetSceneByName("Puzzle2").isLoaded;
+
+        if (isPuzzleActive)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f; 
+            Cursor.lockState = CursorLockMode.Locked; // lock cursor
+            Cursor.visible = false;
+        }
     }
 
     public void ConfirmRestart()
@@ -63,10 +82,27 @@ public class PauseMenu : MonoBehaviour
     public void Yes()
     {
         Time.timeScale = 1;
+        bool isPuzzleActive = SceneManager.GetSceneByName("Puzzle2").isLoaded;
         if (isRestarting)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        {
+            PlayerPrefs.DeleteKey("TrashPuzzleCompleted");
+            PlayerPrefs.Save();
+
+            if (isPuzzleActive)
+            {
+                SceneManager.LoadScene(mainGameplaySceneName);
+            }
+            else 
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
         else
+        {
+            PlayerPrefs.DeleteKey("TrashPuzzleCompleted");
+            PlayerPrefs.Save();
             SceneManager.LoadScene("Menu");
+        }
     }
 
     public void No()

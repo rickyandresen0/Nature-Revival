@@ -48,7 +48,8 @@ public class NPCDialogue : MonoBehaviour
         private void LoadPuzzle()
     {
         HideDialogue();
-        SceneManager.LoadScene("Puzzle2");
+        SceneManager.LoadScene("Puzzle2", LoadSceneMode.Additive);
+        Time.timeScale = 0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

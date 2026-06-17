@@ -16,13 +16,44 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+        private void Start()
+    {
+        UpdateProgressBar();
+        CheckWinCondition();
+    }
+
     public void EnemyKilled()
     {
         enemiesKilled++;
         progressBar.value = (float)enemiesKilled / totalEnemies;
 
-        if (enemiesKilled >= totalEnemies)
+        UpdateProgressBar();
+        CheckWinCondition();
+    }
+    private void UpdateProgressBar()
+    {
+        if (progressBar == null) return;
+
+        float enemyProgress = 0f;
+        if (totalEnemies > 0)
+        {
+            enemyProgress = ((float)enemiesKilled / totalEnemies) * 0.8f;
+        }
+        float puzzleProgress = (PlayerPrefs.GetInt("TrashPuzzleCompleted", 0) == 1) ? 0.2f : 0f;
+
+        // Total gabungan nilainya akan pas 1.0 (100%) di Slider
+        progressBar.value = enemyProgress + puzzleProgress;
+    }
+    public void CheckWinCondition()
+    {
+        UpdateProgressBar();
+        bool allEnemiesDead = enemiesKilled >= totalEnemies;
+        bool puzzleCompleted = PlayerPrefs.GetInt("TrashPuzzleCompleted", 0) == 1;
+
+        if (allEnemiesDead && puzzleCompleted)
+        {
             Win();
+        }
     }
 
     private void Win()

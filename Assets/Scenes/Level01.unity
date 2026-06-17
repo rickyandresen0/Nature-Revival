@@ -4298,7 +4298,7 @@ Transform:
   m_GameObject: {fileID: 662320235}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.683044, y: 0.74378014, z: 0}
+  m_LocalPosition: {x: 10.933044, y: -2.5062199, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -100272,6 +100272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   pausePanel: {fileID: 1455527331}
   confirmationPanel: {fileID: 1194536083}
+  mainGameplaySceneName: MainScene
 --- !u!1 &1649197031
 GameObject:
   m_ObjectHideFlags: 0
