@@ -4298,7 +4298,7 @@ Transform:
   m_GameObject: {fileID: 662320235}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.933044, y: -2.5062199, z: 0}
+  m_LocalPosition: {x: 405.93304, y: 25.49378, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -96567,6 +96567,7 @@ MonoBehaviour:
   progressBar: {fileID: 1455151516}
   winPanel: {fileID: 372568639}
   losePanel: {fileID: 80756347}
+  interactPromptUI: {fileID: 1230051404}
 --- !u!114 &1455151516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99509,11 +99510,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7421694486183407834, guid: 6b80e060b3da942148af27a166de5073, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 387.6
+      value: 298.1
       objectReference: {fileID: 0}
     - target: {fileID: 7421694486183407834, guid: 6b80e060b3da942148af27a166de5073, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 26.3
+      value: 5.299999
       objectReference: {fileID: 0}
     - target: {fileID: 7421694486183407834, guid: 6b80e060b3da942148af27a166de5073, type: 3}
       propertyPath: m_LocalPosition.z
@@ -99575,7 +99576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7421694486183407834, guid: 6b80e060b3da942148af27a166de5073, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.39
+      value: 5.14
       objectReference: {fileID: 0}
     - target: {fileID: 7421694486183407834, guid: 6b80e060b3da942148af27a166de5073, type: 3}
       propertyPath: m_LocalPosition.z

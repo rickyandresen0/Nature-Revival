@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider progressBar;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
+    [SerializeField] private GameObject interactPromptUI;
     private int enemiesKilled;
 
     private void Awake()
@@ -58,6 +59,10 @@ public class GameManager : MonoBehaviour
 
     private void Win()
     {
+        if (interactPromptUI != null)
+        {
+            interactPromptUI.SetActive(false);
+        }
         winPanel.SetActive(true);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
