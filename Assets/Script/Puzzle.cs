@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class Puzzle : MonoBehaviour
 {
@@ -16,6 +18,17 @@ public class Puzzle : MonoBehaviour
   [SerializeField] private Image levelSelectPrefab;
   [SerializeField] private GameObject playAgainButton;
 
+  // Set by a caller (e.g. NPCDialogue) right before this scene is loaded additively.
+  // If >= 0, the matching imageTextures entry is started immediately and the
+  // level-select panel is skipped entirely. Index 0 = leftmost option, 1 = next one
+  // to the right, etc. Reset back to -1 once consumed.
+  public static int RequestedIndex = -1;
+
+  // Set alongside RequestedIndex by the caller. When not empty, finishing the puzzle
+  // will mark this PlayerPrefs key as completed, notify GameManager (progress bar /
+  // win check) and unload this scene automatically - mirroring how Puzzle2 behaves.
+  public static string CompletionPlayerPrefsKey = "";
+
   private List<Transform> pieces;
   private Vector2Int dimensions;
   private float width;
@@ -26,13 +39,98 @@ public class Puzzle : MonoBehaviour
 
   private int piecesCorrect;
 
+  // Whether this run was launched in "direct start" mode (skipped level select).
+  private bool directMode;
+  private string completionKeyForThisRun;
+
+  // -----------------------------------------------------------------------
+  // FIX: Cache the puzzle's own Camera reference so we never accidentally
+  //      pick up the Level01 Camera (which may be on a different scene /
+  //      render layer).  Assigned in Awake after duplicates are removed.
+  // -----------------------------------------------------------------------
+  private Camera puzzleCamera;
+
+  void Awake() {
+    RemoveDuplicateEventSystemAndAudioListener();
+
+    // Find the camera that belongs to THIS scene.  After additive loading
+    // there are two cameras; we want the one in the FixPuzzle scene.
+    puzzleCamera = GetComponentInChildren<Camera>(true);
+    if (puzzleCamera == null)
+      puzzleCamera = Camera.main;          // graceful fallback
+  }
+
+  // Scene puzzle ini biasanya di-load secara additive di atas scene utama (Level01),
+  // yang sudah punya EventSystem & AudioListener sendiri. Untuk menghindari warning
+  // "2 Event Systems" / "2 Audio Listeners", salinan yang datang bersama scene puzzle
+  // ini kita hapus. Komponen Camera-nya tetap dipertahankan supaya potongan puzzle
+  // (yang dirender lewat Camera.main milik scene ini) tetap kelihatan.
+  private void RemoveDuplicateEventSystemAndAudioListener() {
+    EventSystem[] eventSystems = FindObjectsByType<EventSystem>(FindObjectsSortMode.None);
+    if (eventSystems.Length > 1) {
+      foreach (EventSystem es in eventSystems) {
+        if (es.gameObject.scene == gameObject.scene) {
+          // SetActive(false) is immediate (unlike Destroy, which is deferred to end of
+          // frame), so it prevents this duplicate EventSystem's OnEnable from ever
+          // firing and complaining about "only one active Event System".
+          es.gameObject.SetActive(false);
+          Destroy(es.gameObject);
+        }
+      }
+    }
+
+    AudioListener[] audioListeners = FindObjectsByType<AudioListener>(FindObjectsSortMode.None);
+    if (audioListeners.Length > 1) {
+      foreach (AudioListener al in audioListeners) {
+        if (al.gameObject.scene == gameObject.scene) {
+          al.enabled = false;
+          Destroy(al);
+        }
+      }
+    }
+  }
+
   void Start() {
+    // Puzzle ini dimainkan dengan mouse drag, jadi cursor harus kelihatan & bebas.
+    Cursor.lockState = CursorLockMode.None;
+    Cursor.visible = true;
+
+    // -----------------------------------------------------------------------
+    // FIX: Physics2D.Raycast (dan simulasi fisika secara umum) ter-pause
+    //      ketika Time.timeScale == 0, sehingga klik mouse tidak terdeteksi.
+    //      Solusi: aktifkan Physics2D.simulationMode = Script agar Physics2D
+    //      berjalan independen dari timeScale, ATAU - cara lebih simpel -
+    //      kita ganti Raycast dengan OverlapPoint (lihat Update di bawah).
+    //
+    //      Tapi akar masalah yang lebih dalam adalah timeScale di-set 0 oleh
+    //      NPCDialogue SEBELUM scene puzzle selesai load.  Kita tangani itu
+    //      juga di sini: reset timeScale ke 1 saat puzzle siap dimainkan,
+    //      lalu set kembali ke 0 HANYA jika memang dibutuhkan (direct mode).
+    //
+    //      Update(): gunakan Physics2D.OverlapPoint, bukan Raycast, supaya
+    //      tetap bekerja meski timeScale = 0.
+    // -----------------------------------------------------------------------
+
     // Create the UI
     foreach (Texture2D texture in imageTextures) {
       Image image = Instantiate(levelSelectPrefab, levelSelectPanel);
       image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
       // Assign button action
       image.GetComponent<Button>().onClick.AddListener(delegate { StartGame(texture); });
+    }
+
+    // If an NPC asked us to jump straight into a specific puzzle, do that now and
+    // skip the level-select screen entirely.
+    if (RequestedIndex >= 0 && RequestedIndex < imageTextures.Count) {
+      int index = RequestedIndex;
+      directMode = true;
+      completionKeyForThisRun = CompletionPlayerPrefsKey;
+
+      // Reset the statics immediately so they don't leak into the next load.
+      RequestedIndex = -1;
+      CompletionPlayerPrefsKey = "";
+
+      StartGame(imageTextures[index]);
     }
   }
 
@@ -116,7 +214,7 @@ public class Puzzle : MonoBehaviour
   // Place the pieces randomly in the visible area.
   private void Scatter() {
     // Calculate the visible orthographic size of the screen.
-    float orthoHeight = Camera.main.orthographicSize;
+    float orthoHeight = puzzleCamera.orthographicSize;
     float screenAspect = (float)Screen.width / Screen.height;
     float orthoWidth = (screenAspect * orthoHeight);
 
@@ -160,14 +258,33 @@ public class Puzzle : MonoBehaviour
     lineRenderer.enabled = true;
   }
 
-  // Update is called once per frame
+  // -------------------------------------------------------------------------
+  // FIX: Update() - ganti Physics2D.Raycast dengan Physics2D.OverlapPoint.
+  //
+  //  Mengapa Raycast tidak bekerja saat timeScale=0?
+  //    Physics2D.Raycast bergantung pada broadphase collision tree yang
+  //    hanya di-refresh ketika physics simulation step dijalankan.
+  //    Simulation step ter-skip saat timeScale=0 (kecuali ada
+  //    Rigidbody2D dengan interpolation), sehingga ray tidak mengenai
+  //    collider mana pun.
+  //
+  //  Mengapa OverlapPoint bekerja?
+  //    Physics2D.OverlapPoint langsung query internal collision tree
+  //    Unity tanpa memerlukan simulation step.  Selama collider sudah
+  //    di-register (awake) sebelum timeScale di-set 0, query ini tetap
+  //    mengembalikan hasil yang benar.
+  // -------------------------------------------------------------------------
   void Update() {
     if (Input.GetMouseButtonDown(0)) {
-      RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-      if (hit) {
-        // Everything is moveable, so we don't need to check it's a Piece.
+      // Konversi posisi mouse ke world space menggunakan kamera puzzle sendiri.
+      Vector2 worldPos = puzzleCamera.ScreenToWorldPoint(Input.mousePosition);
+
+      // OverlapPoint: query langsung ke collision tree, tidak bergantung
+      // pada physics simulation step — bekerja meski timeScale = 0.
+      Collider2D hit = Physics2D.OverlapPoint(worldPos);
+      if (hit != null) {
         draggingPiece = hit.transform;
-        offset = draggingPiece.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        offset = draggingPiece.position - puzzleCamera.ScreenToWorldPoint(Input.mousePosition);
         offset += Vector3.back;
       }
     }
@@ -181,8 +298,7 @@ public class Puzzle : MonoBehaviour
 
     // Set the dragged piece position to the position of the mouse.
     if (draggingPiece) {
-      Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-      //newPosition.z = draggingPiece.position.z;
+      Vector3 newPosition = puzzleCamera.ScreenToWorldPoint(Input.mousePosition);
       newPosition += offset;
       draggingPiece.position = newPosition;
     }
@@ -211,9 +327,32 @@ public class Puzzle : MonoBehaviour
       // Increase the number of correct pieces, and check for puzzle completion.
       piecesCorrect++;
       if (piecesCorrect == pieces.Count) {
-        playAgainButton.SetActive(true);
+        if (directMode) {
+          CompletePuzzleAndReturn();
+        } else {
+          playAgainButton.SetActive(true);
+        }
       }
     }
+  }
+
+  // Used when this puzzle was started directly by an NPC (no level-select step).
+  // Marks the puzzle as completed, updates the game's progress bar / win check,
+  // and unloads this scene so the player drops back into the main game.
+  private void CompletePuzzleAndReturn() {
+    if (!string.IsNullOrEmpty(completionKeyForThisRun)) {
+      PlayerPrefs.SetInt(completionKeyForThisRun, 1);
+      PlayerPrefs.Save();
+    }
+
+    if (GameManager.instance != null) {
+      GameManager.instance.CheckWinCondition();
+    }
+
+    Time.timeScale = 1f;
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
+    SceneManager.UnloadSceneAsync(gameObject.scene.name);
   }
 
   public void RestartGame() {

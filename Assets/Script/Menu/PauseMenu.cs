@@ -9,9 +9,24 @@ public class PauseMenu : MonoBehaviour
     private bool isRestarting;
     private bool isPaused;
 
+    // Scene-scene puzzle additive yang butuh cursor bebas (mouse) buat dimainkan.
+    private static readonly string[] puzzleSceneNames = { "Puzzle2", "FixPuzzle" };
+
+    private bool IsAnyPuzzleSceneActive()
+    {
+        foreach (string sceneName in puzzleSceneNames)
+        {
+            if (SceneManager.GetSceneByName(sceneName).isLoaded)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void Start()
     {
-        if (SceneManager.GetSceneByName("Puzzle2").isLoaded)
+        if (IsAnyPuzzleSceneActive())
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -50,7 +65,7 @@ public class PauseMenu : MonoBehaviour
         pausePanel.SetActive(false);
         confirmationPanel.SetActive(false); 
         isPaused = false;
-        bool isPuzzleActive = SceneManager.GetSceneByName("Puzzle2").isLoaded;
+        bool isPuzzleActive = IsAnyPuzzleSceneActive();
 
         if (isPuzzleActive)
         {
@@ -82,10 +97,11 @@ public class PauseMenu : MonoBehaviour
     public void Yes()
     {
         Time.timeScale = 1;
-        bool isPuzzleActive = SceneManager.GetSceneByName("Puzzle2").isLoaded;
+        bool isPuzzleActive = IsAnyPuzzleSceneActive();
         if (isRestarting)
         {
             PlayerPrefs.DeleteKey("TrashPuzzleCompleted");
+            PlayerPrefs.DeleteKey("FixPuzzleCompleted");
             PlayerPrefs.Save();
 
             if (isPuzzleActive)
@@ -100,6 +116,7 @@ public class PauseMenu : MonoBehaviour
         else
         {
             PlayerPrefs.DeleteKey("TrashPuzzleCompleted");
+            PlayerPrefs.DeleteKey("FixPuzzleCompleted");
             PlayerPrefs.Save();
             SceneManager.LoadScene("Menu");
         }
